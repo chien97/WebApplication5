@@ -1,0 +1,60 @@
+﻿@model IEnumerable<WebApplication5.Models.APPLICATION>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>下單紀錄</h2>
+
+<p>
+    @Html.ActionLink("新增", "Create")
+    @using (Html.BeginForm("Index", "APPLICATIONs", FormMethod.Get))
+    
+    {
+<p>
+    查詢股票: @Html.TextBox("searchString")
+    <input type="submit" value="查詢" />
+</p>
+      }
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DealID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StockID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StockQuantity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OWNER.OwnerName)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DealID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StockID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StockQuantity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OWNER.OwnerName)
+        </td>
+        <td>
+            @Html.ActionLink("編輯", "Edit", new { id = item.DealID }) |
+            @Html.ActionLink("詳情", "Details", new { id = item.DealID }) |
+            @Html.ActionLink("刪除", "Delete", new { id = item.DealID })
+        </td>
+    </tr>
+    }
+
+</table>

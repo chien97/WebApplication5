@@ -1,0 +1,49 @@
+﻿@model IEnumerable<WebApplication5.Models.OWNER>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>名冊</h2>
+
+<p>
+    @Html.ActionLink("新增", "Create")
+    @using (Html.BeginForm("Index", "OWNERs", FormMethod.Get))
+
+    {
+    <p>
+        查詢股票: @Html.TextBox("sString")
+        <input type="submit" value="查詢" />
+    </p>
+}
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.OwnerID)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.OwnerName)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OwnerID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OwnerName)
+                </td>
+                <td>
+                    @Html.ActionLink("編輯", "Edit", new { id = item.OwnerID }) |
+                    @Html.ActionLink("詳情", "Details", new { id = item.OwnerID }) |
+                    @Html.ActionLink("刪除", "Delete", new { id = item.OwnerID })
+                </td>
+            </tr>
+        }
+
+    </table>

@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="StockModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="APPLICATION">
+          <Key>
+            <PropertyRef Name="DealID" />
+          </Key>
+          <Property Name="DealID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="StockID" Type="varchar" MaxLength="50" />
+          <Property Name="OwnerID" Type="varchar" MaxLength="50" />
+          <Property Name="StockQuantity" Type="int" />
+        </EntityType>
+        <EntityType Name="OWNER">
+          <Key>
+            <PropertyRef Name="OwnerID" />
+          </Key>
+          <Property Name="OwnerID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="OwnerName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_APPLICATION_OWNER">
+          <End Role="OWNER" Type="Self.OWNER" Multiplicity="0..1" />
+          <End Role="APPLICATION" Type="Self.APPLICATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OWNER">
+              <PropertyRef Name="OwnerID" />
+            </Principal>
+            <Dependent Role="APPLICATION">
+              <PropertyRef Name="OwnerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="StockModelStoreContainer">
+          <EntitySet Name="APPLICATION" EntityType="Self.APPLICATION" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OWNER" EntityType="Self.OWNER" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_APPLICATION_OWNER" Association="Self.FK_APPLICATION_OWNER">
+            <End Role="OWNER" EntitySet="OWNER" />
+            <End Role="APPLICATION" EntitySet="APPLICATION" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="StockModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="APPLICATION">
+          <Key>
+            <PropertyRef Name="DealID" />
+          </Key>
+          <Property Name="DealID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="StockID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="OwnerID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StockQuantity" Type="Int32" />
+          <NavigationProperty Name="OWNER" Relationship="Self.FK_APPLICATION_OWNER" FromRole="APPLICATION" ToRole="OWNER" />
+        </EntityType>
+        <EntityType Name="OWNER">
+          <Key>
+            <PropertyRef Name="OwnerID" />
+          </Key>
+          <Property Name="OwnerID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="OwnerName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="APPLICATION" Relationship="Self.FK_APPLICATION_OWNER" FromRole="OWNER" ToRole="APPLICATION" />
+        </EntityType>
+        <Association Name="FK_APPLICATION_OWNER">
+          <End Role="OWNER" Type="Self.OWNER" Multiplicity="0..1" />
+          <End Role="APPLICATION" Type="Self.APPLICATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OWNER">
+              <PropertyRef Name="OwnerID" />
+            </Principal>
+            <Dependent Role="APPLICATION">
+              <PropertyRef Name="OwnerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="StockEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="APPLICATION" EntityType="Self.APPLICATION" />
+          <EntitySet Name="OWNER" EntityType="Self.OWNER" />
+          <AssociationSet Name="FK_APPLICATION_OWNER" Association="Self.FK_APPLICATION_OWNER">
+            <End Role="OWNER" EntitySet="OWNER" />
+            <End Role="APPLICATION" EntitySet="APPLICATION" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="StockModelStoreContainer" CdmEntityContainer="StockEntities">
+          <EntitySetMapping Name="APPLICATION">
+            <EntityTypeMapping TypeName="StockModel.APPLICATION">
+              <MappingFragment StoreEntitySet="APPLICATION">
+                <ScalarProperty Name="DealID" ColumnName="DealID" />
+                <ScalarProperty Name="StockID" ColumnName="StockID" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+                <ScalarProperty Name="StockQuantity" ColumnName="StockQuantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OWNER">
+            <EntityTypeMapping TypeName="StockModel.OWNER">
+              <MappingFragment StoreEntitySet="OWNER">
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+                <ScalarProperty Name="OwnerName" ColumnName="OwnerName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="無" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,42 @@
+﻿@model WebApplication5.Models.APPLICATION
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>詳情</h2>
+
+<div>
+    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.StockID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StockID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StockQuantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StockQuantity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OWNER.OwnerName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OWNER.OwnerName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("編輯", "Edit", new { id = Model.DealID }) |
+    @Html.ActionLink("回上頁", "Index")
+</p>
